@@ -10,7 +10,7 @@
 
     <fragment
         android:id="@+id/fragment_listing"
-        android:name="com.droid.nav.movieguidemvp.view.MoviesListingFragment"
+        android:name="com.droid.nav.movieguidemvvm.view.MoviesListingFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
        />
