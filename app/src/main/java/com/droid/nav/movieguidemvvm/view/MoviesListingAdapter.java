@@ -37,39 +37,15 @@ public class MoviesListingAdapter extends RecyclerView.Adapter<MoviesListingAdap
     public void addAll(List<Movie> movies) {
 
 
-
+        int size=0;
         if (this.movies == null || this.movies.isEmpty()) {
             this.movies = movies;
-            notifyItemRangeInserted(0, movies.size());
         } else {
-            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
-                @Override
-                public int getOldListSize() {
-                    return MoviesListingAdapter.this.movies.size();
-                }
-
-                @Override
-                public int getNewListSize() {
-                    return movies.size();
-                }
-
-                @Override
-                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    return MoviesListingAdapter.this.movies.get(oldItemPosition).getId() ==
-                            movies.get(newItemPosition).getId();
-                }
-
-                @Override
-                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    Movie project = movies.get(newItemPosition);
-                    Movie old = movies.get(oldItemPosition);
-                    return project.getId() == old.getId()
-                            && Objects.equals(project.getTitle(), old.getTitle());
-                }
-            });
-//            this.movies = movies;
-            result.dispatchUpdatesTo(this);
+            size=this.movies.size();
+            this.movies.addAll(movies);
         }
+        notifyItemRangeInserted(size, this.movies.size());
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

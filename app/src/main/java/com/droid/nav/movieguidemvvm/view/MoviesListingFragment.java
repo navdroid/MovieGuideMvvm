@@ -1,7 +1,6 @@
 package com.droid.nav.movieguidemvvm.view;
 
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
@@ -18,17 +17,13 @@ import android.view.ViewGroup;
 import com.droid.nav.movieguidemvvm.R;
 import com.droid.nav.movieguidemvvm.databinding.FragmentMoviesBinding;
 import com.droid.nav.movieguidemvvm.di.Injectable;
-import com.droid.nav.movieguidemvvm.model.Movie;
 import com.droid.nav.movieguidemvvm.view_model.MovieViewModel;
 
-import java.util.List;
 
 import javax.inject.Inject;
 
 public class MoviesListingFragment extends Fragment implements Injectable {
 
-    public static final String TAG = "ProjectListFragment";
-    //    private ProjectAdapter projectAdapter;
     private FragmentMoviesBinding binding;
 
     @Inject
@@ -91,24 +86,16 @@ public class MoviesListingFragment extends Fragment implements Injectable {
 
     private void observeViewModel(MovieViewModel viewModel) {
         // Update the list when the data changes
-        viewModel.getMovieList().observe(this, new Observer<List<Movie>>() {
-            @Override
-            public void onChanged(@Nullable List<Movie> moviesWraper) {
-                if (moviesWraper != null) {
-                    binding.setIsLoading(false);
-                    moviesListingAdapter.addAll(moviesWraper);
-                }
+        viewModel.getMovieWrapper().observe(this, moviesWraper -> {
+            if (moviesWraper != null) {
+
+                binding.setIsLoading(false);
+                moviesListingAdapter.addAll(moviesWraper.getMovieList());
             }
         });
+
     }
 
-//    private final ProjectClickCallback projectClickCallback = new ProjectClickCallback() {
-//        @Override
-//        public void onClick(Project project) {
-//            if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-//                ((MainActivity) getActivity()).show(project);
-//            }
-//        }
-//    };
+
 
 }

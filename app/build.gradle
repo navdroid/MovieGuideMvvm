@@ -34,8 +34,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    dataBinding{
-        enabled=true;
+    dataBinding {
+        enabled = true;
     }
     compileOptions {
         targetCompatibility 1.8
@@ -72,6 +72,7 @@ dependencies {
     // Other
     implementation 'net.jcip:jcip-annotations:1.0'
     implementation 'com.squareup.moshi:moshi:1.4.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     compileOnly 'javax.annotation:jsr250-api:1.0'
 
     // Retrofit 2
@@ -103,7 +104,6 @@ dependencies {
         exclude module: 'recyclerview-v7'
     }
 }
-
 
 //dependencies {
 //    implementation fileTree(dir: 'libs', include: ['*.jar'])

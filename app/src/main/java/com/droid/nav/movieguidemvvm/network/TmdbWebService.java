@@ -5,6 +5,8 @@ import com.droid.nav.movieguidemvvm.model.MoviesWraper;
 import com.droid.nav.movieguidemvvm.model.ReviewsWrapper;
 import com.droid.nav.movieguidemvvm.model.VideoWrapper;
 
+
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -18,6 +20,9 @@ public interface TmdbWebService {
 
     @GET("3/discover/movie?language=en&sort_by=popularity.desc")
     Call<MoviesWraper> popularMovies(@Query("page") int page);
+
+    @GET("3/discover/movie?language=en&sort_by=popularity.desc")
+    Observable<MoviesWraper> popularMoviesOb(@Query("page") int page);
 
     @GET("3/discover/movie?vote_count.gte=500&language=en&sort_by=vote_average.desc")
     Call<MoviesWraper> highestRatedMovies(@Query("page") int page);

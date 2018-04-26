@@ -3,11 +3,13 @@ package com.droid.nav.movieguidemvvm.view_model;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 
 import com.droid.nav.movieguidemvvm.BaseApplication;
 import com.droid.nav.movieguidemvvm.model.Movie;
-import com.droid.nav.movieguidemvvm.network.ProjectRepository;
+import com.droid.nav.movieguidemvvm.model.MoviesWraper;
+import com.droid.nav.movieguidemvvm.network.MovieRepository;
 
 import java.util.List;
 
@@ -19,24 +21,26 @@ import javax.inject.Inject;
 
 public class MovieViewModel extends AndroidViewModel {
 
-    private MutableLiveData<List<Movie>> movieLiveData;
+    private MutableLiveData<MoviesWraper> movieWraperLiveData;
 
     @Inject
-    ProjectRepository projectRepository;
+    MovieRepository movieRepository;
 
     @Inject
-    public MovieViewModel(@NonNull BaseApplication application, @NonNull ProjectRepository projectRepository) {
+    public MovieViewModel(@NonNull BaseApplication application, @NonNull MovieRepository movieRepository) {
         super(application);
 
-        movieLiveData=projectRepository.getMoviesFirstPage();
+        movieWraperLiveData = movieRepository.fetchMovies(1);
     }
 
     public void fetchMovieList(int page) {
-        movieLiveData=projectRepository.fetchMovies(movieLiveData,page);
+        movieWraperLiveData = movieRepository.fetchMovies(page);
 
     }
 
-    public LiveData<List<Movie>> getMovieList() {
-        return movieLiveData;
+
+
+    public LiveData<MoviesWraper> getMovieWrapper() {
+        return movieWraperLiveData;
     }
 }
